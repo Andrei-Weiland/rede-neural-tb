@@ -1,0 +1,22 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Dados pesados / sensíveis (não subir DICOMs de pacientes)
+DIVISAO 80-10-10/
+2025*/
+*.dcm
+
+# Cache gerado localmente
+tb_cnn/cache/
+
+# Saídas locais de predição
+tb_cnn/saida_predicoes/
+**/saida_predicoes/
+
+# Logs e temporários
+*.log
+.DS_Store
+Thumbs.db
