@@ -20,3 +20,6 @@ tb_cnn/saida_predicoes/
 *.log
 .DS_Store
 Thumbs.db
+
+tb_cnn/modelos/modelo_semente*.pt
+tb_cnn/resultados/imagens_teste/
