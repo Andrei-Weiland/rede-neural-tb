@@ -1,0 +1,69 @@
+{
+  "modelo": "mascara_total_densenet121",
+  "validacao_cruzada_5_partes_x_3_sementes": {
+    "auc": {
+      "media": 0.7921,
+      "desvio": 0.062
+    },
+    "acuracia": {
+      "media": 0.6979,
+      "desvio": 0.0607
+    },
+    "sensibilidade": {
+      "media": 0.6977,
+      "desvio": 0.0869
+    },
+    "especificidade": {
+      "media": 0.6984,
+      "desvio": 0.1691
+    }
+  },
+  "teste_49_exames_media_3_sementes": {
+    "auc": {
+      "media": 0.899,
+      "desvio": 0.0316
+    },
+    "acuracia": {
+      "media": 0.8163,
+      "desvio": 0.054
+    },
+    "sensibilidade": {
+      "media": 0.8602,
+      "desvio": 0.1037
+    },
+    "especificidade": {
+      "media": 0.7407,
+      "desvio": 0.1697
+    }
+  },
+  "modelo_final_semente": 44,
+  "teste_por_semente": {
+    "42": {
+      "auc": 0.9086,
+      "acuracia": 0.7755,
+      "sensibilidade": 0.9032,
+      "especificidade": 0.5556,
+      "limiar": 0.3655
+    },
+    "43": {
+      "auc": 0.8638,
+      "acuracia": 0.7959,
+      "sensibilidade": 0.7419,
+      "especificidade": 0.8889,
+      "limiar": 0.4514
+    },
+    "44": {
+      "auc": 0.9247,
+      "acuracia": 0.8776,
+      "sensibilidade": 0.9355,
+      "especificidade": 0.7778,
+      "limiar": 0.0419
+    }
+  },
+  "matriz_confusao_teste_modelo_final": {
+    "verdadeiro_positivo": 29,
+    "falso_negativo": 2,
+    "verdadeiro_negativo": 14,
+    "falso_positivo": 4
+  }
+}

@@ -1,0 +1,11 @@
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch
+torchvision
+pydicom
+numpy
+opencv-python
+pandas
+scikit-learn
+tqdm
+Pillow
+torchxrayvision
