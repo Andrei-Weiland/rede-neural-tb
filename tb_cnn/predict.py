@@ -67,6 +67,15 @@ def desenhar(img_cinza, cam, sugestivo):
     return pil
 
 
+def analisar_arquivo(caminho, model, limiar, device):
+    """Analisa um arquivo e devolve (texto do resultado, imagem marcada)."""
+    img = ler_imagem(caminho)
+    prob, cam = analisar(img, model, device)
+    sugestivo = prob >= limiar
+    resultado = TEXTO_POSITIVO if sugestivo else TEXTO_NEGATIVO
+    return resultado, desenhar(img, cam, sugestivo)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("entrada", help="arquivo .dcm/.png/.jpg ou pasta com exames")
