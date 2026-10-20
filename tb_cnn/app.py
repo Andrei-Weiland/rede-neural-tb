@@ -48,6 +48,9 @@ class App(tk.Tk):
         self.lbl_imagem = ttk.Label(self, anchor="center", background="#111")
         self.lbl_imagem.pack(fill="both", expand=True, padx=16, pady=(0, 8))
 
+        self.lbl_status = ttk.Label(self, text="Carregando modelo…", foreground="#555")
+        self.lbl_status.pack(pady=(0, 8))
+
         ttk.Label(
             self,
             text="Ferramenta de apoio à triagem. Não substitui avaliação médica.",
@@ -62,10 +65,10 @@ class App(tk.Tk):
             try:
                 model, limiar = carregar_modelo(self.device, MODELO_FINAL)
                 self.model, self.limiar = model, limiar
-                self.after(0, lambda: self.status.config(text=f"Modelo pronto ({self.device})."))
+                self.after(0, lambda: self.lbl_status.config(text=f"Modelo pronto ({self.device})."))
             except Exception as e:
                 self.after(0, lambda: messagebox.showerror("Erro", f"Não foi possível carregar o modelo:\n{e}"))
-                self.after(0, lambda: self.status.config(text="Erro ao carregar o modelo."))
+                self.after(0, lambda: self.lbl_status.config(text="Erro ao carregar o modelo."))
 
         threading.Thread(target=tarefa, daemon=True).start()
 
@@ -87,7 +90,7 @@ class App(tk.Tk):
         if self.caminho is None:
             return
         self.btn_analisar.config(state="disabled")
-        self.status.config(text="Analisando…")
+        self.lbl_status.config(text="Analisando…")
         caminho = self.caminho
 
         def tarefa():
@@ -96,7 +99,7 @@ class App(tk.Tk):
                 self.after(0, lambda: self.mostrar(resultado, imagem))
             except Exception as e:
                 self.after(0, lambda: messagebox.showerror("Erro", f"Falha na análise:\n{e}"))
-                self.after(0, lambda: self.status.config(text="Erro na análise."))
+                self.after(0, lambda: self.lbl_status.config(text="Erro na análise."))
                 self.after(0, lambda: self.btn_analisar.config(state="normal"))
 
         threading.Thread(target=tarefa, daemon=True).start()
@@ -111,7 +114,7 @@ class App(tk.Tk):
         img.thumbnail((area_w - 20, area_h - 20), Image.Resampling.LANCZOS)
         self.foto = ImageTk.PhotoImage(img)
         self.lbl_imagem.config(image=self.foto)
-        self.status.config(text=f"Concluído: {self.caminho.name}")
+        self.lbl_status.config(text=f"Concluído: {self.caminho.name}")
         self.btn_analisar.config(state="normal")
 
 
