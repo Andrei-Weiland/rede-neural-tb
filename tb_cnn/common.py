@@ -1,4 +1,5 @@
 """Funções compartilhadas: leitura DICOM, máscara total do pulmão e DenseNet121."""
+import sys
 from pathlib import Path
 
 import cv2
@@ -9,11 +10,29 @@ import torch.nn as nn
 from pydicom.pixels import apply_modality_lut, apply_voi_lut
 from torchvision import models
 
-ROOT = Path(__file__).resolve().parent.parent
+
+def _dir_app():
+    """Pasta do app: ao lado do .exe (congelado) ou tb_cnn/ (desenvolvimento)."""
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
+def _dir_recursos():
+    """Recursos empacotados pelo PyInstaller (_MEIPASS) ou tb_cnn/."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS)
+    return Path(__file__).resolve().parent
+
+
+ROOT = _dir_app().parent if not getattr(sys, "frozen", False) else _dir_app()
 DATA_DIR = ROOT / "DIVISAO 80-10-10"
-CACHE_DIR = Path(__file__).resolve().parent / "cache"
-MODELOS_DIR = Path(__file__).resolve().parent / "modelos"
-MODELO_FINAL = MODELOS_DIR / "modelo_final.pt"
+CACHE_DIR = _dir_app() / "cache"
+MODELOS_DIR = _dir_app() / "modelos"
+# Prefere modelo ao lado do .exe; se não houver, usa o empacotado
+_MODELO_LOCAL = MODELOS_DIR / "modelo_final.pt"
+_MODELO_PACOTE = _dir_recursos() / "modelos" / "modelo_final.pt"
+MODELO_FINAL = _MODELO_LOCAL if _MODELO_LOCAL.exists() else _MODELO_PACOTE
 
 IMG_SIZE = 512
 IMAGENET_MEAN = (0.485, 0.456, 0.406)

@@ -9,17 +9,34 @@ DIVISAO 80-10-10/
 2025*/
 *.dcm
 
-# Cache gerado localmente
+# Cache e saídas locais
 tb_cnn/cache/
-
-# Saídas locais de predição
 tb_cnn/saida_predicoes/
 **/saida_predicoes/
+
+# PyInstaller / .exe (milhares de arquivos — NÃO sobe)
+dist/
+build/
+**/dist/
+**/build/
+*.spec
+tb_cnn/dist/
+tb_cnn/build/
+
+# Scripts locais de empacotamento / figura (opcional no repo)
+tb_cnn/gerar_exe.bat
+tb_cnn/gerar_exe.ps1
+tb_cnn/gerar_figura_gradcam.py
+
+# Exemplos intermediários do pipeline (figuras finais podem ser adicionadas à mão se quiser)
+tb_cnn/exemplos/
 
 # Logs e temporários
 *.log
 .DS_Store
 Thumbs.db
 
+# Modelos: sobe só modelo_final.pt
 tb_cnn/modelos/modelo_semente*.pt
+tb_cnn/modelos/modelo_caso1.pt
 tb_cnn/resultados/imagens_teste/
