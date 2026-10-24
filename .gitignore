@@ -23,10 +23,9 @@ build/
 tb_cnn/dist/
 tb_cnn/build/
 
-# Scripts locais de empacotamento / figura (opcional no repo)
-tb_cnn/gerar_exe.bat
-tb_cnn/gerar_exe.ps1
+# Script local de figura e material do capítulo (Overleaf) — fora do repo de código
 tb_cnn/gerar_figura_gradcam.py
+overleaf_tcc/
 
 # Exemplos intermediários do pipeline (figuras finais podem ser adicionadas à mão se quiser)
 tb_cnn/exemplos/
