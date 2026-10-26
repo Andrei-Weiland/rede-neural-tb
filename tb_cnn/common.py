@@ -29,10 +29,20 @@ ROOT = _dir_app().parent if not getattr(sys, "frozen", False) else _dir_app()
 DATA_DIR = ROOT / "DIVISAO 80-10-10"
 CACHE_DIR = _dir_app() / "cache"
 MODELOS_DIR = _dir_app() / "modelos"
-# Prefere modelo ao lado do .exe; se não houver, usa o empacotado
+# Prefere arquivos ao lado do .exe; se não houver, usa o empacotado (_internal)
 _MODELO_LOCAL = MODELOS_DIR / "modelo_final.pt"
 _MODELO_PACOTE = _dir_recursos() / "modelos" / "modelo_final.pt"
 MODELO_FINAL = _MODELO_LOCAL if _MODELO_LOCAL.exists() else _MODELO_PACOTE
+
+_PSPNET_NOME = "pspnet_chestxray_best_model_4.pth"
+
+
+def _dir_pesos_pspnet() -> Path:
+    """Pasta com os pesos da PSPNet (evita download na 1ª análise)."""
+    for pasta in (MODELOS_DIR, _dir_recursos() / "modelos"):
+        if (pasta / _PSPNET_NOME).exists():
+            return pasta
+    return MODELOS_DIR
 
 IMG_SIZE = 512
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
@@ -74,7 +84,10 @@ def mascara_pulmao(img512):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if _segmentador is None:
-        _segmentador = xrv.baseline_models.chestx_det.PSPNet().eval().to(device)
+        # cache_dir = pasta que contém pspnet_chestxray_best_model_4.pth
+        _segmentador = xrv.baseline_models.chestx_det.PSPNet(
+            cache_dir=str(_dir_pesos_pspnet())
+        ).eval().to(device)
     x = torch.from_numpy(xrv.datasets.normalize(img512.astype(np.float32), 255))[None, None].to(device)
     with torch.no_grad():
         saida = torch.sigmoid(_segmentador(x))[0].cpu()

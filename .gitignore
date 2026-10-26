@@ -35,7 +35,8 @@ tb_cnn/exemplos/
 .DS_Store
 Thumbs.db
 
-# Modelos: sobe só modelo_final.pt
+# Modelos: sobe só modelo_final.pt (PSPNet ~260MB fica fora)
 tb_cnn/modelos/modelo_semente*.pt
 tb_cnn/modelos/modelo_caso1.pt
+tb_cnn/modelos/pspnet_chestxray_best_model_4.pth
 tb_cnn/resultados/imagens_teste/
